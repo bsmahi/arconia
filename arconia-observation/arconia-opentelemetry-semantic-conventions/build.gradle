@@ -32,12 +32,6 @@ dependencies {
     testRuntimeOnly "io.micrometer:micrometer-tracing-bridge-otel"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
     testRuntimeOnly "org.springframework:spring-webmvc"
-
-    constraints {
-        implementation("io.modelcontextprotocol.sdk:mcp-core:1.1.2") {
-            because "CVE-2026-34237: Upgrade transitive dependency from Spring AI Chat Client"
-        }
-    }
 }
 
 dependencyManagement {
