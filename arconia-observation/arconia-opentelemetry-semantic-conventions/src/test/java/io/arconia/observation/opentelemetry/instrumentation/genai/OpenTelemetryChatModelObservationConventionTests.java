@@ -17,6 +17,7 @@ import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.metadata.ChatGenerationMetadata;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.metadata.Usage;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -121,7 +122,10 @@ class OpenTelemetryChatModelObservationConventionTests {
         assertThat(keyValues).contains(
                 KeyValue.of(GenAiIncubatingAttributes.GEN_AI_RESPONSE_ID.getKey(), "resp-1"),
                 KeyValue.of(GenAiIncubatingAttributes.GEN_AI_USAGE_INPUT_TOKENS.getKey(), "1000"),
-                KeyValue.of(GenAiIncubatingAttributes.GEN_AI_USAGE_OUTPUT_TOKENS.getKey(), "500")
+                KeyValue.of(GenAiIncubatingAttributes.GEN_AI_USAGE_OUTPUT_TOKENS.getKey(), "500"),
+                KeyValue.of(GenAiIncubatingAttributes.GEN_AI_USAGE_CACHE_CREATION_INPUT_TOKENS.getKey(), "1000"),
+                KeyValue.of(GenAiIncubatingAttributes.GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS.getKey(), "500")
+
         );
     }
 
@@ -249,8 +253,7 @@ class OpenTelemetryChatModelObservationConventionTests {
                         .build())
                 .generations(List.of(new Generation(
                         AssistantMessage.builder().content(content).build(),
-                        org.springframework.ai.chat.metadata.ChatGenerationMetadata.builder()
-                                .finishReason(finishReason).build())))
+                        ChatGenerationMetadata.builder().finishReason(finishReason).build())))
                 .build();
         context.setResponse(response);
     }
@@ -271,11 +274,17 @@ class OpenTelemetryChatModelObservationConventionTests {
         @Override
         public Integer getTotalTokens() { return 1500; }
         @Override
+        public Long getCacheWriteInputTokens() { return 1000L; }
+        @Override
+        public Long getCacheReadInputTokens() { return 500L; }
+        @Override
         public Map<String, Integer> getNativeUsage() {
             Map<String, Integer> usage = new HashMap<>();
             usage.put("promptTokens", 1000);
             usage.put("completionTokens", 500);
             usage.put("totalTokens", 1500);
+            usage.put("cacheWriteInputTokens", 1000);
+            usage.put("cacheReadInputTokens", 500);
             return usage;
         }
     }

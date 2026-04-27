@@ -58,6 +58,8 @@ public final class OpenTelemetryChatModelObservationConvention extends DefaultCh
     @Override
     public KeyValues getHighCardinalityKeyValues(ChatModelObservationContext context) {
         var keyValues = super.getHighCardinalityKeyValues(context);
+        keyValues = usageCacheWriteInputTokens(keyValues, context);
+        keyValues = usageCacheReadInputTokens(keyValues, context);
         // Content
         if (OpenTelemetryGenAiOptions.CaptureContentFormat.SPAN_ATTRIBUTES == openTelemetryGenAiOptions.getInference().getCaptureContent()) {
             keyValues = inputMessages(keyValues, context);
@@ -100,6 +102,26 @@ public final class OpenTelemetryChatModelObservationConvention extends DefaultCh
         }
 
         return keyValues.and(GenAiMoreIncubatingAttributes.GEN_AI_TOOL_DEFINITIONS.getKey(), JsonParser.toJson(toolDefinitions));
+    }
+
+    // Response
+
+    private KeyValues usageCacheWriteInputTokens(KeyValues keyValues, ChatModelObservationContext context) {
+        if (context.getResponse() != null) {
+            return keyValues.and(
+                    GenAiIncubatingAttributes.GEN_AI_USAGE_CACHE_CREATION_INPUT_TOKENS.getKey(),
+                    String.valueOf(context.getResponse().getMetadata().getUsage().getCacheWriteInputTokens()));
+        }
+        return keyValues;
+    }
+
+    private KeyValues usageCacheReadInputTokens(KeyValues keyValues, ChatModelObservationContext context) {
+        if (context.getResponse() != null) {
+            return keyValues.and(
+                    GenAiIncubatingAttributes.GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS.getKey(),
+                    String.valueOf(context.getResponse().getMetadata().getUsage().getCacheReadInputTokens()));
+        }
+        return keyValues;
     }
 
     // Content
