@@ -89,6 +89,18 @@ You can configure the Dev Service via configuration properties.
 | `arconia.dev.services.{service-name}.otlp-http-port`
 | `0`
 | Fixed port for exposing the OTLP HTTP port to the host. When it's 0 (default), a random available port is assigned dynamically.
+
+| `arconia.dev.services.{service-name}.loki-port`
+| `0`
+| Fixed port for exposing the Loki port to the host. When it's 0 (default), a random available port is assigned dynamically.
+
+| `arconia.dev.services.{service-name}.tempo-port`
+| `0`
+| Fixed port for exposing the Tempo port to the host. When it's 0 (default), a random available port is assigned dynamically.
+
+| `arconia.dev.services.{service-name}.prometheus-port`
+| `0`
+| Fixed port for exposing the Prometheus port to the host. When it's 0 (default), a random available port is assigned dynamically.
 |===
 
 include::partial$disabling-dev-service.adoc[]
