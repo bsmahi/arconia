@@ -18,8 +18,8 @@ class OpenInferenceResourceConfiguration {
 
     @Bean
     @Order(OpenTelemetryResourceAutoConfiguration.DEFAULT_ORDER)
-    OpenInferenceResourceContributor openInferenceResourceContributor() {
-        return new OpenInferenceResourceContributor();
+    OpenInferenceResourceContributor openInferenceResourceContributor(OpenInferenceProperties properties) {
+        return new OpenInferenceResourceContributor(properties.getProjectName());
     }
 
 }

@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OpenInferenceResourceConfigurationTests {
 
     private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-            .withConfiguration(AutoConfigurations.of(OpenInferenceResourceConfiguration.class));
+            .withConfiguration(AutoConfigurations.of(OpenInferenceResourceConfiguration.class))
+            .withBean(OpenInferenceProperties.class, OpenInferenceProperties::new);
 
     @Test
     void autoConfigurationNotActivatedWhenOpenTelemetryResourceAutoConfigurationClassMissing() {

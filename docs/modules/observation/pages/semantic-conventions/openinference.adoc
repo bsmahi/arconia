@@ -83,6 +83,10 @@ You can configure the OpenInference Semantic Conventions via configuration prope
 |===
 |Property |Default |Description
 
+|	`arconia.observations.conventions.openinference.project-name`
+|	-
+|	Name of the project in the OpenInference backend where to send the telemetry data. If not defined, the application name will be used as the project name.
+
 |	`arconia.observations.conventions.openinference.base64-image-max-length`
 |	`32 000`
 |	Maximum length of a base64-encoded image.
