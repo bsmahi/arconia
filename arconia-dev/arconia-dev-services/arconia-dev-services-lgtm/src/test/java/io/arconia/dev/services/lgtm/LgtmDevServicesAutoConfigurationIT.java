@@ -54,7 +54,7 @@ class LgtmDevServicesAutoConfigurationIT extends BaseDevServicesAutoConfiguratio
                     assertThat(context).hasSingleBean(getContainerClass());
                     var container = context.getBean(getContainerClass());
                     assertThat(container.getDockerImageName()).contains(ArconiaLgtmStackContainer.COMPATIBLE_IMAGE_NAME);
-                    assertThat(container.getEnv()).isEmpty();
+                    assertThat(container.getEnv()).contains("GF_USERS_DEFAULT_THEME=system");
                     assertThat(container.getNetworkAliases()).hasSize(1);
                     assertThat(container.isShouldBeReused()).isTrue();
                     assertThat(container.getBinds()).isEmpty();

@@ -21,10 +21,17 @@ final class ArconiaLgtmStackContainer extends LgtmStackContainer {
 
     static final int OTLP_HTTP_PORT = 4318;
 
+    static final int LOKI_PORT = 3100;
+
+    static final int TEMPO_PORT = 3200;
+
+    static final int PROMETHEUS_PORT = 9090;
+
     public ArconiaLgtmStackContainer(LgtmDevServicesProperties properties) {
         super(DockerImageName.parse(properties.getImageName()).asCompatibleSubstituteFor(COMPATIBLE_IMAGE_NAME));
         this.properties = properties;
 
+        this.withEnv("GF_USERS_DEFAULT_THEME", "system");
         ContainerConfigurer.base(this, properties);
     }
 
@@ -39,6 +46,15 @@ final class ArconiaLgtmStackContainer extends LgtmStackContainer {
         }
         if (ContainerUtils.isValidPort(properties.getOtlpHttpPort())) {
             addFixedExposedPort(properties.getOtlpHttpPort(), OTLP_HTTP_PORT);
+        }
+        if (ContainerUtils.isValidPort(properties.getLokiPort())) {
+            addFixedExposedPort(properties.getLokiPort(), LOKI_PORT);
+        }
+        if (ContainerUtils.isValidPort(properties.getTempoPort())) {
+            addFixedExposedPort(properties.getTempoPort(), TEMPO_PORT);
+        }
+        if (ContainerUtils.isValidPort(properties.getPrometheusPort())) {
+            addFixedExposedPort(properties.getPrometheusPort(), PROMETHEUS_PORT);
         }
     }
 

@@ -33,17 +33,26 @@ class LgtmDevServicesPropertiesTests extends BaseDevServicesPropertiesTests<Lgtm
 
         assertThat(properties.getOtlpGrpcPort()).isEqualTo(0);
         assertThat(properties.getOtlpHttpPort()).isEqualTo(0);
+        assertThat(properties.getLokiPort()).isEqualTo(0);
+        assertThat(properties.getTempoPort()).isEqualTo(0);
+        assertThat(properties.getPrometheusPort()).isEqualTo(0);
     }
 
     @Test
     void shouldUpdateServiceSpecificValues() {
         LgtmDevServicesProperties properties = createProperties();
 
-        properties.setOtlpGrpcPort(ArconiaLgtmStackContainer.OTLP_GRPC_PORT);
-        properties.setOtlpHttpPort(ArconiaLgtmStackContainer.OTLP_HTTP_PORT);
+        properties.setOtlpGrpcPort(9001);
+        properties.setOtlpHttpPort(9002);
+        properties.setLokiPort(9003);
+        properties.setTempoPort(9004);
+        properties.setPrometheusPort(9005);
 
-        assertThat(properties.getOtlpGrpcPort()).isEqualTo(ArconiaLgtmStackContainer.OTLP_GRPC_PORT);
-        assertThat(properties.getOtlpHttpPort()).isEqualTo(ArconiaLgtmStackContainer.OTLP_HTTP_PORT);
+        assertThat(properties.getOtlpGrpcPort()).isEqualTo(9001);
+        assertThat(properties.getOtlpHttpPort()).isEqualTo(9002);
+        assertThat(properties.getLokiPort()).isEqualTo(9003);
+        assertThat(properties.getTempoPort()).isEqualTo(9004);
+        assertThat(properties.getPrometheusPort()).isEqualTo(9005);
     }
 
 }

@@ -6,12 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.arconia.dev.services.api.config.VolumeMapping;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import io.arconia.dev.services.api.config.BaseDevServicesProperties;
 import io.arconia.dev.services.api.config.ResourceMapping;
+import io.arconia.dev.services.api.config.VolumeMapping;
 
 /**
  * Properties for the Grafana LGTM Dev Services.
@@ -84,6 +83,24 @@ public class LgtmDevServicesProperties implements BaseDevServicesProperties {
      * When it's 0 (default), a random available port is assigned dynamically.
      */
     private int otlpHttpPort = 0;
+
+    /**
+     * Fixed port for exposing the Loki port to the host.
+     * When it's 0 (default), a random available port is assigned dynamically.
+     */
+    private int lokiPort = 0;
+
+    /**
+     * Fixed port for exposing the Tempo port to the host.
+     * When it's 0 (default), a random available port is assigned dynamically.
+     */
+    private int tempoPort = 0;
+
+    /**
+     * Fixed port for exposing the Prometheus port to the host.
+     * When it's 0 (default), a random available port is assigned dynamically.
+     */
+    private int prometheusPort = 0;
 
     @Override
     public boolean isEnabled() {
@@ -189,6 +206,30 @@ public class LgtmDevServicesProperties implements BaseDevServicesProperties {
 
     public void setOtlpHttpPort(int otlpHttpPort) {
         this.otlpHttpPort = otlpHttpPort;
+    }
+
+    public int getLokiPort() {
+        return lokiPort;
+    }
+
+    public void setLokiPort(int lokiPort) {
+        this.lokiPort = lokiPort;
+    }
+
+    public int getTempoPort() {
+        return tempoPort;
+    }
+
+    public void setTempoPort(int tempoPort) {
+        this.tempoPort = tempoPort;
+    }
+
+    public int getPrometheusPort() {
+        return prometheusPort;
+    }
+
+    public void setPrometheusPort(int prometheusPort) {
+        this.prometheusPort = prometheusPort;
     }
 
 }

@@ -23,6 +23,9 @@ class ArconiaLgtmStackContainerTests {
         properties.setPort(1234);
         properties.setOtlpGrpcPort(5678);
         properties.setOtlpHttpPort(9067);
+        properties.setLokiPort(9001);
+        properties.setTempoPort(9002);
+        properties.setPrometheusPort(9003);
 
         var container = new ArconiaLgtmStackContainer(properties);
         container.configure();
@@ -35,7 +38,13 @@ class ArconiaLgtmStackContainerTests {
                 .anyMatch(binding -> binding.startsWith(
                         properties.getOtlpGrpcPort() + ":" + ArconiaLgtmStackContainer.OTLP_GRPC_PORT))
                 .anyMatch(binding -> binding.startsWith(
-                        properties.getOtlpHttpPort() + ":" + ArconiaLgtmStackContainer.OTLP_HTTP_PORT));
+                        properties.getOtlpHttpPort() + ":" + ArconiaLgtmStackContainer.OTLP_HTTP_PORT))
+                .anyMatch(binding -> binding.startsWith(
+                        properties.getLokiPort() + ":" + ArconiaLgtmStackContainer.LOKI_PORT))
+                .anyMatch(binding -> binding.startsWith(
+                        properties.getTempoPort() + ":" + ArconiaLgtmStackContainer.TEMPO_PORT))
+                .anyMatch(binding -> binding.startsWith(
+                        properties.getPrometheusPort() + ":" + ArconiaLgtmStackContainer.PROMETHEUS_PORT));
     }
 
 }
