@@ -62,20 +62,6 @@ class LangSmithConventionsAutoConfigurationTests {
     }
 
     @Test
-    void doesNotActivateWhenDisabled() {
-        contextRunner
-                .withPropertyValues("arconia.observations.conventions.langsmith.enabled=false")
-                .run(context -> {
-                    assertThat(context).doesNotHaveBean(ObservationConventionsProvider.class);
-                    assertThat(context).doesNotHaveBean(LangSmithChatModelObservationConvention.class);
-                    assertThat(context).doesNotHaveBean(LangSmithEmbeddingModelObservationConvention.class);
-                    assertThat(context).doesNotHaveBean(LangSmithToolCallingObservationConvention.class);
-                    assertThat(context).doesNotHaveBean(LangSmithChatModelObservationHandler.class);
-                    assertThat(context).doesNotHaveBean(LangSmithEmbeddingModelObservationHandler.class);
-                });
-    }
-
-    @Test
     void doesNotActivateWhenSpringAiNotOnClasspath() {
         contextRunner
                 .withClassLoader(new FilteredClassLoader(ChatModelObservationConvention.class))

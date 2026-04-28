@@ -6,7 +6,6 @@ import org.springframework.ai.chat.observation.ChatModelObservationConvention;
 import org.springframework.ai.embedding.observation.EmbeddingModelObservationConvention;
 import org.springframework.ai.tool.observation.ToolCallingObservationConvention;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -38,7 +37,6 @@ import io.arconia.observation.langsmith.instrumentation.LangSmithToolCallingObse
 })
 @ConditionalOnClass({ChatModelObservationConvention.class, EmbeddingModelObservationConvention.class, ToolCallingObservationConvention.class})
 @ConditionalOnProperty(prefix = ObservationProperties.CONFIG_PREFIX, name = "conventions.type", havingValue = "langsmith", matchIfMissing = true)
-@ConditionalOnBooleanProperty(prefix = LangSmithConventionsProperties.CONFIG_PREFIX, value = "enabled", matchIfMissing = true)
 @EnableConfigurationProperties(LangSmithConventionsProperties.class)
 public final class LangSmithConventionsAutoConfiguration {
 

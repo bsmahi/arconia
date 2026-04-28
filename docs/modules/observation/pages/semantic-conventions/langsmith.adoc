@@ -90,15 +90,6 @@ Content capturing is enabled by default, matching the behavior of the official L
 
 == Configuration Properties
 
-.LangSmith Configuration Properties
-|===
-|Property |Default |Description
-
-|	`arconia.observations.conventions.langsmith.enabled`
-|	`true`
-|	Whether to enable LangSmith semantic conventions.
-|===
-
 === Inference
 
 .LangSmith Inference Configuration Properties

@@ -12,17 +12,4 @@ public class LangSmithConventionsProperties extends LangSmithOptions {
 
     public static final String CONFIG_PREFIX = "arconia.observations.conventions.langsmith";
 
-    /**
-     * Whether to enable LangSmith semantic conventions.
-     */
-    private boolean enabled = true;
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
 }
