@@ -1,0 +1,71 @@
+= Getting Started
+
+This guide walks you through adding Arconia to an existing Spring Boot application.
+
+== Requirements
+
+Ensure your environment meets the xref:system-requirements.adoc[System Requirements] before you begin.
+
+== Dependency Management
+
+Arconia publishes a BOM (Bill of Materials) to manage compatible versions across all its libraries. Add it to your project before adding any Arconia module dependency.
+
+[tabs]
+======
+Gradle::
++
+[source,groovy,subs="attributes"]
+----
+dependencyManagement {
+	imports {
+		mavenBom "io.arconia:arconia-bom:{page-component-version}"
+	}
+}
+----
+
+Maven::
++
+[source,xml,subs="attributes,verbatim"]
+----
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.arconia</groupId>
+            <artifactId>arconia-bom</artifactId>
+            <version>{page-component-version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+----
+======
+
+== Explore by Feature
+
+Arconia is modular: you only add what you need on top of your standard Spring Boot application. Follow each module's own guide to get started.
+
+|===
+| Module | Description
+
+| xref:core-features/index.adoc[Core Features]
+| Bootstrap mode, profiles, and other foundational capabilities.
+
+| xref:dev-services:index.adoc[Dev Services]
+| Automatic provisioning of containerized services for development and testing.
+
+| xref:kubernetes:index.adoc[Kubernetes]
+| Configuration and deployment of Spring Boot applications to Kubernetes.
+
+| xref:multitenancy:index.adoc[Multitenancy]
+| Built-in support for multitenant applications.
+
+| xref:opentelemetry:index.adoc[OpenTelemetry]
+| Unified observability combining OpenTelemetry and Micrometer for logs, metrics, and traces.
+
+| xref:observation:index.adoc[AI Observability]
+| Semantic conventions and integrations for AI observability platforms.
+
+| xref:generative-ai:docling-document-reader.adoc[Docling]
+| AI-powered document processing with the Docling document reader.
+|===

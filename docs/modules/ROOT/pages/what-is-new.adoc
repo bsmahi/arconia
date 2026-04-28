@@ -9,20 +9,18 @@ We provide an automated way to upgrade your project to the latest version of Arc
 
 === General
 
-* Dev Services can now be configured with dynamic properties for those integrations that don't support the ConnectionDetails API. That enables more extended use cases and support capabilities for Dev Services.
+* Dev Services can now be configured with dynamic properties for those integrations that don't support Spring Boot's `ConnectionDetails` API. That enables more extended use cases and support capabilities for Dev Services.
 
 === Ollama
 
-* The Ollama Dev Service now automatically configures the Spring AI OpenAI client to use Ollama's OpenAI-compatible API endpoint when the Spring AI OpenAI module is on the classpath.
-* Workaround for a https://github.com/testcontainers/testcontainers-java/issues/9287[Testcontainers bug] where Docker Desktop on Windows injects a phantom nvidia runtime via WSL, causing Ollama container startup to fail on non-NVIDIA hosts.
+* The Ollama Dev Service now automatically configures the Spring AI OpenAI client to use Ollama's OpenAI-compatible API endpoint when the Spring AI OpenAI module is on the classpath. Learn more about it xref:dev-services:ollama.adoc#_spring_ai_openai_compatibility[here].
+* Workaround for a https://github.com/testcontainers/testcontainers-java/issues/9287[Testcontainers bug] where Docker Desktop on Windows injects a phantom NVIDIA runtime via WSL, causing Ollama container startup to fail on non-NVIDIA hosts.
 
 == Observation
 
 === General
 
 * A new `arconia-observation` module was introduced for managing observation convention modules.
-* Convention modules auto-activate when their dependency is on the classpath. No configuration property is required. A new `ObservationConventionsProvider` interface enables auto-discovery of convention modules, including user-provided ones.
-* When multiple convention modules are detected without an explicit selection, a `FailureAnalyzer` provides an actionable error message guiding the user to set the `arconia.observations.conventions.type` property.
 
 === OpenTelemetry Semantic Conventions
 
@@ -53,12 +51,12 @@ This release defines a new baseline for the xref:multitenancy:index.adoc[Arconia
 
 === Highlights
 
-* *Java 25 `ScopedValue` for tenant context*: The `TenantContext` class uses Java's `ScopedValue` API (https://openjdk.org/jeps/506[JEP 506]) for tenant context propagation, ensuring automatic cleanup and safe usage with virtual threads.
-* *HTTP tenant resolution*: Resolve tenants from HTTP headers or cookies via the `arconia-multitenancy-web-spring-boot-starter`.
-* *Micrometer observation enrichment*: All observations are automatically enriched with the tenant identifier via an `ObservationFilter`.
-* *SLF4J MDC integration*: Tenant identifier is automatically added to the MDC for log correlation.
-* *Tenant verification*: Optional `TenantVerifier` for validating resolved tenants against a `TenantDetailsService`.
-* *Tenant-aware caching*: Built-in `TenantKeyGenerator` for cache isolation between tenants.
+* Java 25 `ScopedValue` for tenant context: The `TenantContext` class uses Java's `ScopedValue` API (https://openjdk.org/jeps/506[JEP 506]) for tenant context propagation, ensuring automatic cleanup and safe usage with virtual threads.
+* HTTP tenant resolution: Resolve tenants from HTTP headers or cookies via the `arconia-multitenancy-web-spring-boot-starter`.
+* Micrometer observation enrichment: All observations are automatically enriched with the tenant identifier via an `ObservationFilter`.
+* SLF4J MDC integration: Tenant identifier is automatically added to the MDC for log correlation.
+* Tenant verification: Optional `TenantVerifier` for validating resolved tenants against a `TenantDetailsService`.
+* Tenant-aware caching: Built-in `TenantKeyGenerator` for cache isolation between tenants.
 
 === Breaking Changes
 
