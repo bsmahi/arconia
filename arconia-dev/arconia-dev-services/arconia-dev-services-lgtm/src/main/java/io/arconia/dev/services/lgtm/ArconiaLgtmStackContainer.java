@@ -27,22 +27,12 @@ final class ArconiaLgtmStackContainer extends LgtmStackContainer implements DevS
 
     static final String SPRING_BOOT_DASHBOARDS_PATH = "/otel-lgtm/spring-boot-dashboards";
 
-    static final String GRAFANA_DASHBOARD_PROVISIONING_PATH = "/otel-lgtm/grafana/conf/provisioning/dashboards";
+    static final String DEFAULT_GRAFANA_DASHBOARD_PROVISIONING_PATH = "/otel-lgtm/grafana/conf/provisioning/dashboards";
 
-    static final String SPRING_BOOT_DASHBOARD_PROVIDER = GRAFANA_DASHBOARD_PROVISIONING_PATH + "/arconia-dashboards.yaml";
+    static final String SPRING_BOOT_DASHBOARD_PROVIDER_FILE = "/spring-boot-dashboards.yaml";
 
-    String springBootDashboardsProvider() {
-        return """
-            apiVersion: 1
+    private final String grafanaDashboardProvisioningPath;
 
-            providers:
-              - name: Spring Boot
-                type: file
-                options:
-                  path: %s
-                  foldersFromFilesStructure: false
-            """.formatted(SPRING_BOOT_DASHBOARDS_PATH);
-    }
 
     static final int GRAFANA_PORT = 3000;
 
@@ -57,8 +47,13 @@ final class ArconiaLgtmStackContainer extends LgtmStackContainer implements DevS
     static final int PROMETHEUS_PORT = 9090;
 
     public ArconiaLgtmStackContainer(LgtmDevServicesProperties properties) {
+        this(properties, DEFAULT_GRAFANA_DASHBOARD_PROVISIONING_PATH);
+    }
+
+    public ArconiaLgtmStackContainer(LgtmDevServicesProperties properties, String grafanaDashboardProvisioningPath) {
         super(DockerImageName.parse(properties.getImageName()).asCompatibleSubstituteFor(COMPATIBLE_IMAGE_NAME));
         this.properties = properties;
+        this.grafanaDashboardProvisioningPath = grafanaDashboardProvisioningPath;
 
         this.withEnv("GF_USERS_DEFAULT_THEME", "system");
         ContainerConfigurer.base(this, properties);
@@ -107,7 +102,7 @@ final class ArconiaLgtmStackContainer extends LgtmStackContainer implements DevS
             return;
         }
 
-        withCopyToContainer(Transferable.of(springBootDashboardsProvider().getBytes(StandardCharsets.UTF_8)), SPRING_BOOT_DASHBOARD_PROVIDER);
+        withCopyToContainer(Transferable.of(springBootDashboardsProvider().getBytes(StandardCharsets.UTF_8)), springBootDashboardProviderPath());
     }
 
     boolean hasSpringBootDashboardResources() {
@@ -117,9 +112,26 @@ final class ArconiaLgtmStackContainer extends LgtmStackContainer implements DevS
                 .anyMatch(this::isSpringBootDashboardPath);
     }
 
+    String springBootDashboardsProvider() {
+        return """
+                apiVersion: 1
+
+                providers:
+                  - name: Spring Boot
+                    type: file
+                    options:
+                      path: %s
+                      foldersFromFilesStructure: false
+                """.formatted(SPRING_BOOT_DASHBOARDS_PATH);
+    }
+
     private boolean isSpringBootDashboardPath(String containerPath) {
         return containerPath.equals(SPRING_BOOT_DASHBOARDS_PATH)
                 || containerPath.startsWith(SPRING_BOOT_DASHBOARDS_PATH + "/");
+    }
+
+    private String springBootDashboardProviderPath() {
+        return grafanaDashboardProvisioningPath + "/" + SPRING_BOOT_DASHBOARD_PROVIDER_FILE;
     }
 
 }
