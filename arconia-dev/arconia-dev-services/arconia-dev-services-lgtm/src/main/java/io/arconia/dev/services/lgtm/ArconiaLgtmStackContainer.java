@@ -29,7 +29,7 @@ final class ArconiaLgtmStackContainer extends LgtmStackContainer implements DevS
 
     static final String DEFAULT_GRAFANA_DASHBOARD_PROVISIONING_PATH = "/otel-lgtm/grafana/conf/provisioning/dashboards";
 
-    static final String SPRING_BOOT_DASHBOARD_PROVIDER_FILE = "/spring-boot-dashboards.yaml";
+    static final String SPRING_BOOT_DASHBOARD_PROVIDER_FILE = "spring-boot-dashboards.yaml";
 
     private final String grafanaDashboardProvisioningPath;
 
